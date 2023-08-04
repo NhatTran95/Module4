@@ -1,0 +1,50 @@
+<th:block th:fragment="sidebar">
+    <div id="sidebar-menu">
+
+        <ul class="metismenu" id="side-menu">
+
+            <li class="menu-title">Navigation</li>
+
+            <li>
+                <a href="/home" class="waves-effect">
+                    <i class="remixicon-dashboard-line"></i>
+                    <span class="badge badge-success badge-pill float-right"></span>
+                    <span> Dashboards </span>
+                </a>
+
+            </li>
+
+            <li>
+                <a href="javascript: void(0);" class="waves-effect">
+                    <i class="remixicon-file-user-fill"></i>
+                    <span> Customer </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="/customer">List</a>
+                    </li>
+                    <li>
+                        <a href="/customer/create">Create</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript: void(0);" class="waves-effect">
+                    <i class="remixicon-product-hunt-fill"></i>
+                    <span> Product </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="nav-second-level" aria-expanded="false">
+                    <li>
+                        <a href="/product">List</a>
+                    </li>
+                    <li>
+                        <a href="/product/create">Create</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+</th:block>

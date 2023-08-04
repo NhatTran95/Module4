@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Products List</title>
+    <th:block th:replace="layout/head" />
+</head>
+
+<body>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- Topbar Start -->
+    <th:block th:replace="layout/navbar"/>
+    <!-- end Topbar -->
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left-side-menu">
+
+        <div class="slimscroll-menu">
+
+            <!--- Sidemenu -->
+            <th:block th:replace="layout/sidebar"/>
+            <!-- End Sidebar -->
+
+            <div class="clearfix"></div>
+
+        </div>
+        <!-- Sidebar -left -->
+
+    </div>
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">NhatAD</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+                                    <li class="breadcrumb-item active">Products List</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Products List</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="col-12">
+                    <div class="card">
+                        <div style="color: red">
+                            <div th:if="${success}">
+                                <span th:text="${success}"></span>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+
+                            <table id="basic-datatable" class="table dt-responsive nowrap">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+<!--                                    <th>CreateAt</th>-->
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr th:each="row,rowStat : ${products}">
+                                    <td th:text="${row.getId()}"></td>
+                                    <td th:text="${row.getName()}"></td>
+                                    <td th:text="${row.getDescription()}"></td>
+                                    <td th:text="${row.getPrice()}"></td>
+<!--                                    <td th:text="${row.getCreateAt()}"></td>-->
+                                    <td><a th:href="@{/product/{id}/edit(id=${row.getId()})}">edit</a></td>
+                                    <td><a th:href="@{/product/{id}/delete(id=${row.getId()})}">delete</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div> <!-- end card body-->
+                    </div> <!-- end card -->
+                </div>
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <!-- Footer Start -->
+        <th:block th:replace="layout/footer"/>
+        <!-- end Footer -->
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+
+</div>
+<!-- END wrapper -->
+
+
+<!-- Right Sidebar -->
+<th:block th:replace="layout/rightbar"/>
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div class="rightbar-overlay"></div>
+
+<th:block th:replace="layout/script"/>
+
+</body>
+</html>
