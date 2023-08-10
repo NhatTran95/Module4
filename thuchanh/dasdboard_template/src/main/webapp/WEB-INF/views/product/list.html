@@ -59,36 +59,38 @@
                 <!-- end page title -->
                 <div class="col-12">
                     <div class="card">
-                        <div style="color: red">
-                            <div th:if="${success}">
-                                <span th:text="${success}"></span>
-                            </div>
-                        </div>
 
                         <div class="card-body">
+
+                            <div style="color: red">
+                                <div th:if="${message}">
+                                    <span th:text="${message}"></span>
+                                </div>
+                            </div>
 
                             <table id="basic-datatable" class="table dt-responsive nowrap">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Price</th>
-<!--                                    <th>CreateAt</th>-->
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Đơn vị</th>
+                                    <th>Danh mục</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                <tr th:each="row,rowStat : ${products}">
-                                    <td th:text="${row.getId()}"></td>
-                                    <td th:text="${row.getName()}"></td>
-                                    <td th:text="${row.getDescription()}"></td>
-                                    <td th:text="${row.getPrice()}"></td>
-<!--                                    <td th:text="${row.getCreateAt()}"></td>-->
-                                    <td><a th:href="@{/product/{id}/edit(id=${row.getId()})}">edit</a></td>
-                                    <td><a th:href="@{/product/{id}/delete(id=${row.getId()})}">delete</a></td>
+                                <tr th:each="item : ${products}">
+                                    <td th:text="${item.getId()}"></td>
+                                    <td th:text="${item.getTitle()}"></td>
+                                    <td th:text="${item.getPrice()}"></td>
+                                    <td th:text="${item.getUnit()}"></td>
+                                    <td th:text="${item.category.title}"></td>
+                                    <td>
+                                        <button ><a th:href="@{/products/edit/__${item.id}__}">edit</a></button>
+                                        <button ><a th:href="@{/products/delete/__${item.id}__}">delete</a></button>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

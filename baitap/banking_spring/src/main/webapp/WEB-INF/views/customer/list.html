@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>List of customers</title>
+    <th:block th:replace="/layout/head :: head"></th:block>
+    <style>
+        .success {
+            color: red;
+            background-color: navajowhite;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>Danh sách khách hàng</h2>
+            </div>
+            <div class="col-sm-8">
+                <a href="/customers/create" class="btn btn-outline-light">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Thêm khách hàng mới</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="success mt-1">
+        <th:block th:if="${success == true}">
+            <div class="success">
+                <ul>
+                    <li th:text="${message}"></li>
+                </ul>
+            </div>
+        </th:block>
+    </div>
+    <div>
+        <table class="table table-hover table-borderless">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+                <th>Số dư</th>
+                <th colspan="5" class="text-center">Hành động</th>
+            </tr>
+            </thead>
+            <tbody id="tbCustomer">
+
+            <th:block th:each="customer : ${customers}">
+                <tr>
+                    <td th:text="${customer.id}"></td>
+                    <td th:text="${customer.fullName}"></td>
+                    <td th:text="${customer.email}"></td>
+                    <td th:text="${customer.phone}"></td>
+                    <td th:text="${customer.address}"></td>
+                    <td th:text="${customer.balance}"></td>
+                    <td class="text-center">
+                        <a title="Edit" th:href="@{/customers/edit/{id}(id=${customer.id})}"
+                           class="btn btn-outline-primary">Sửa
+
+
+                        </a>
+                        <a title="Deposit" th:href="@{/customers/deposit/{id}(id=${customer.id})}"
+                           class="btn btn-outline-secondary">Nạp
+
+                        </a>
+                        <a title="Withdraw" th:href="@{/customers/withdraw/{id}(id=${customer.id})}"
+                           class="btn btn-outline-success">Rút
+
+
+                        </a>
+                        <a title="Transfer" th:href="@{/customers/transfer/{id}(id=${customer.id})}"
+                           class="btn btn-outline-warning">Chuyển
+
+
+                        </a>
+                        <a title="delete" th:href="@{/customers/delete/{id}(id=${customer.id})}"
+                           class="btn btn-outline-danger">Xóa
+
+
+                        </a>
+
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+
+    </div>
+
+    <footer>
+
+    </footer>
+
+</div>
+
+
+</body>
+</html>

@@ -52,44 +52,77 @@
                                     <li class="breadcrumb-item active">Create Product</li>
                                 </ol>
                             </div>
-                            <h4 class="page-title">Create Product</h4>
+                            <h4 class="page-title">Delete Product</h4>
                         </div>
                     </div>
                 </div>
                 <!-- end page title -->
-                <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <th:block th:if="${success}">
+                            <div class="card-box">
+                                <h4 class="header-title-success" th:text="${message}"></h4>
+                            </div>
+                        </th:block>
 
-                    <div class="card-box">
-                        <form action="/product/delete" class="parsley-form" method="post" th:object="${product}">
-                            <input type="hidden" th:field="*{id}"/>
-                            <div class="form-group">
-                                <label for="name">Name<span class="text-danger">*</span></label>
-                                <input th:field="*{name}" type="text" parsley-trigger="change" required="" placeholder="Enter name" class="form-control" id="name">
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Description<span class="text-danger">*</span></label>
-                                <input th:field="*{description}" type="text" parsley-trigger="change" required="" placeholder="Enter description" class="form-control" id="description">
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price<span class="text-danger">*</span></label>
-                                <input th:field="*{price}" id="price" type="text" placeholder="Enter price" required="" class="form-control">
-                            </div>
-<!--                            <div class="form-group">-->
-<!--                                <label for="createAt">CreateAt<span class="text-danger">*</span></label>-->
-<!--                                <input th:field="*{createAt}" id="createAt" type="text" placeholder="Enter createAt" required="" class="form-control">-->
-<!--                            </div>-->
 
-                            <div class="form-group text-right mb-0">
-                                <button class="btn btn-primary waves-effect waves-light mr-1" type="submit">
-                                    Delete
-                                </button>
-                                <button type="reset" class="btn btn-secondary waves-effect waves-light">
-                                    <a href="/product">Cancel</a>
-                                </button>
+                        <th:block th:if="${error}">
+                            <div class="card-box">
+                                <h4 class="header-title-error" th:text="${message}"></h4>
                             </div>
+                        </th:block>
 
-                        </form>
-                    </div> <!-- end card-box -->
+                        <th:block th:if="${error == false}">
+
+                            <div class="card-box">
+                                <form class="parsley-form" method="post" th:object="${product}">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="title">Tên sản phẩm<span class="text-danger">*</span></label>
+                                                <input type="text" placeholder="Tên sản phẩm..."
+                                                       class="form-control" id="title" th:field="*{title}">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="price">Giá<span class="text-danger">*</span></label>
+                                                <input type="number" placeholder="Giá..." class="form-control"
+                                                       id="price" th:field="*{price}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="unit">Đơn vị<span class="text-danger">*</span></label>
+                                                <input type="text" placeholder="Đơn vị..." class="form-control"
+                                                       id="unit" th:field="*{unit}">
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="categoryTitle">Danh mục<span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" placeholder="Danh mục..." class="form-control"
+                                                       id="categoryTitle" th:field="*{category.title}">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group text-right mb-0">
+                                            <button class="btn btn-primary waves-effect waves-light mr-1" type="submit">
+                                                Xóa
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div> <!-- end card-box -->
+                        </th:block>
+                    </div>
+                    <!-- end col -->
                 </div>
             </div> <!-- container -->
 

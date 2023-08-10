@@ -1,77 +1,38 @@
 package com.codegym.model;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import lombok.*;
 
+import javax.persistence.*;
+import java.math.BigDecimal;
+
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "products")
 public class Product {
-    private int id;
-    private String name;
-    private String description;
-    private double price;
-    private Date createAt;
 
-    public Product() {
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String title;
+    private BigDecimal price;
+    private String unit;
 
-    public Product(int id, String name, String description, double price, String createAt) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            this.createAt = format.parse(createAt);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    private Category category;
 
-    public Product(int id, String name, String description, double price) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Date getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(Date createAt) {
-        this.createAt = createAt;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", price=" + price +
+                ", unit='" + unit + '\'' +
+                ", category=" + category +
+                '}';
     }
 }

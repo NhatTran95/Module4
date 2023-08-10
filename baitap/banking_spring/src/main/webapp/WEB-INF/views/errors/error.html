@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Errors</title>
+</head>
+<body>
+<h1>Errors</h1>
+<div>
+  <th:block th:if="${error == true}">
+    <div class="error">
+      <ul class="container">
+        <li th:text="${message}"></li>
+      </ul>
+    </div>
+  </th:block>
+</div>
+</body>
+</html>

@@ -83,8 +83,8 @@
                                     <td th:text="${row.getName()}"></td>
                                     <td th:text="${row.getEmail()}"></td>
                                     <td th:text="${row.getAddress()}"></td>
-                                    <td><a th:href="@{/customer/{id}/edit(id=${row.getId()})}">edit</a></td>
-                                    <td><a th:href="@{/customer/{id}/delete(id=${row.getId()})}">delete</a></td>
+                                    <td><a th:href="@{/customers/{id}/edit(id=${row.getId()})}">edit</a></td>
+                                    <td><a th:href="@{/customers/{id}/delete(id=${row.getId()})}">delete</a></td>
                                 </tr>
 
                                 </tbody>

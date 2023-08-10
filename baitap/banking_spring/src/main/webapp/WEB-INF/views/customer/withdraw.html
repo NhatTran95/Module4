@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Withdraw</title>
+    <th:block th:replace="/layout/head"></th:block>
+    <style>
+        .error {
+            color: red;
+            background-color: navajowhite;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-5">
+                <h2>Rút tiền</h2>
+            </div>
+            <div class="col-sm-7">
+                <a href="/customers" class="btn btn-outline-light">
+                    <i class="fa-solid fa-bars"></i>
+                    <span>Danh sách khách hàng</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container error mt-1">
+        <ul>
+            <li th:each="err : ${#fields.errors('withdraw.*')}" th:text="${err}"></li>
+        </ul>
+        <th:block th:if="${error == true}">
+            <div class="success">
+                <ul>
+                    <li th:text="${message}"></li>
+                </ul>
+            </div>
+        </th:block>
+    </div>
+    <div>
+        <form method="post" autocomplete="off" th:object="${withdraw}">
+            <div class="row mt-3">
+
+                <div class="mb-3 float-left col-lg-3 col-sm-12 col-md-6">
+                    <label for="senderID" class="form-label">Customer ID</label>
+                    <input type="number" class="form-control" id="senderID"
+                           th:field="*{customer.id}" readonly
+                    >
+                </div>
+                <div class="mb-3 float-left col-lg-3 col-sm-12 col-md-6">
+                    <label for="senderName" class="form-label">Customer Name</label>
+                    <input type="text" class="form-control" id="senderName"
+                           th:field="*{customer.fullName}" readonly
+                    >
+                </div>
+                <div class="mb-3 float-left col-lg-3 col-sm-12 col-md-6">
+                    <label for="email" class="form-label">Customer Email</label>
+                    <input type="email" class="form-control" id="email"
+                           th:field="*{customer.email}" readonly
+                    >
+                </div>
+                <div class="mb-3 float-left col-lg-3 col-sm-12 col-md-6">
+                    <label for="balance" class="form-label">Customer Balance</label>
+                    <input type="number" class="form-control" id="balance"
+                           th:field="*{customer.balance}" readonly
+                    >
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="mb-3 float-left col-lg-3 col-sm-12 col-md-6">
+                    <label for="withdraw" class="form-label">Transaction Amount (VND)</label>
+                    <input type="number" class="form-control" id="withdraw" name="transactionAmount"
+                           placeholder="money">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-outline-warning">
+                <i class="fas fa-exchange-alt"></i>
+                Rút
+            </button>
+        </form>
+    </div>
+</div>
+
+<footer>
+
+</footer>
+</body>
+
+</html>

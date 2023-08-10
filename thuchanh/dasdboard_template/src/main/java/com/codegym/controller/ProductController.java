@@ -1,61 +1,136 @@
 package com.codegym.controller;
 
-import com.codegym.model.Customer;
+
+import com.codegym.model.Category;
 import com.codegym.model.Product;
-import com.codegym.service.IProductService;
-import com.codegym.service.ProductService;
+import com.codegym.service.category.ICategoryService;
+import com.codegym.service.product.IProductService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
+@RequestMapping("/products")
 public class ProductController {
-    private final IProductService productService = new ProductService();
+//    private final IProductService productService = new ProductServiceImpl();
 
-   @GetMapping("/product")
-    public String showAllProduct(Model model){
+    @Autowired
+    private IProductService productService;
+
+    @Autowired
+    private ICategoryService categoryService;
+
+   @GetMapping("")
+    public String showListPage(Model model){
        List<Product> products = productService.findAll();
        model.addAttribute("products", products);
        return "/product/list";
    }
-   @GetMapping("/product/create")
-    public String createProduct(Model model){
-       model.addAttribute("product", new Product());
+   @GetMapping("/create")
+    public String showCreatePage(Model model){
+
+       List<Category> categories = categoryService.findAll();
+
+       model.addAttribute("success", false);
+       model.addAttribute("message", "");
+       model.addAttribute("categories", categories);
+
        return "/product/create";
    }
-   @PostMapping("/product/save")
-    public String save(Product product, RedirectAttributes redirect){
-       product.setId((int) (Math.random() * 10000));
-       productService.save(product);
-       redirect.addFlashAttribute("success", "added product successfully!");
-       return "redirect:/product";
-   }
-    @GetMapping("/product/{id}/edit")
-    public String update(@PathVariable int id, Model model) {
-        model.addAttribute("product", productService.findById(id));
+    @GetMapping("/edit/{productId}")
+    public String showUpdatePage(@PathVariable Long productId, Model model) {
+
+        Optional<Product> productOptional = productService.findById(productId);
+        List<Category> categories = categoryService.findAll();
+
+        if (!productOptional.isPresent()) {
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Sản phẩm không tồn tại");
+        }
+        else {
+            model.addAttribute("error", false);
+            model.addAttribute("message", "");
+            model.addAttribute("categories", categories);
+
+            model.addAttribute("product", productOptional.get());
+        }
+
         return "product/update";
     }
-    @PostMapping("/product/update")
-    public String update(Product product, RedirectAttributes redirect) {
-        productService.update(product.getId(), product);
-        redirect.addFlashAttribute("success", "updated product successfully!");
-        return "redirect:/product";
-    }
-    @GetMapping("/product/{id}/delete")
-    public String delete(@PathVariable int id, Model model) {
-        model.addAttribute("product", productService.findById(id));
+
+    @GetMapping("/delete/{productId}")
+    public String showDeletePage(@PathVariable Long productId, Model model) {
+
+        Optional<Product> productOptional = productService.findById(productId);
+
+        if (!productOptional.isPresent()) {
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Sản phẩm không tồn tại");
+        }
+        else {
+            model.addAttribute("error", false);
+            model.addAttribute("message", "");
+
+            model.addAttribute("product", productOptional.get());
+        }
+
         return "product/delete";
     }
-    @PostMapping("/product/delete")
-    public String delete(Product product, RedirectAttributes redirect) {
-        productService.remove(product.getId());
-        redirect.addFlashAttribute("success", "Removed customer successfully!");
-        return "redirect:/product";
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute Product product, Model model) {
+
+        productService.save(product);
+
+        model.addAttribute("success", true);
+        model.addAttribute("message", "Thêm sản phẩm thành công");
+
+        return "product/create";
     }
+
+    @PostMapping("/edit/{productId}")
+    public String update(@PathVariable Long productId, @ModelAttribute Product product, Model model) {
+        Optional<Product> productOptional = productService.findById(productId);
+
+        if (!productOptional.isPresent()) {
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Sản phẩm không tồn tại");
+            model.addAttribute("product", product);
+            return "product/update";
+        }
+        else {
+            product.setId(productId);
+            productService.save(product);
+            model.addAttribute("message", "Đã sửa thành công ");
+        }
+        List<Product> products = productService.findAll();
+        model.addAttribute("products", products);
+        return "/product/list";
+    }
+    @PostMapping("/delete/{productId}")
+    public String delete(@PathVariable Long productId, @ModelAttribute Product product, Model model) {
+        Optional<Product> productOptional = productService.findById(productId);
+
+        if (!productOptional.isPresent()) {
+            model.addAttribute("error", true);
+            model.addAttribute("message", "Sản phẩm không tồn tại");
+            model.addAttribute("product", product);
+            return "product/delete";
+        }
+        else {
+            product.setId(productId);
+            productService.delete(product);
+            model.addAttribute("message", "Đã xóa thành công ");
+        }
+        List<Product> products = productService.findAll();
+        model.addAttribute("products", products);
+        return "/product/list";
+    }
+
 }

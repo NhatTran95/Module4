@@ -1,8 +1,8 @@
 package com.codegym.controller;
 
 import com.codegym.model.Customer;
-import com.codegym.service.CustomerService;
-import com.codegym.service.ICustomerService;
+import com.codegym.service.customer.CustomerServiceImpl;
+import com.codegym.service.customer.ICustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,44 +14,43 @@ import java.util.List;
 
 @Controller
 public class CustomerController {
-    private final ICustomerService customerService = new CustomerService();
-    @GetMapping("/customer")
+    private final ICustomerService customerService = new CustomerServiceImpl();
+    @GetMapping("/customers")
     public String showListCustomers(Model model){
         List<Customer> customerList = customerService.findAll();
         model.addAttribute("customers", customerList);
         return "customer/list";
     }
-    @GetMapping("/customer/create")
+    @GetMapping("/customers/create")
     public String createCustomer(Model model){
         model.addAttribute("customer", new Customer());
         return "customer/create";
     }
-    @PostMapping("/customer/save")
+    @PostMapping("/customers/save")
     public String save(Customer customer, RedirectAttributes redirect) {
-        customer.setId((int) (Math.random() * 10000));
         customerService.save(customer);
         redirect.addFlashAttribute("success", "added customer successfully!");
         return "redirect:/customer";
     }
-    @GetMapping("/customer/{id}/edit")
-    public String update(@PathVariable int id, Model model) {
+    @GetMapping("/customers/{id}/edit")
+    public String update(@PathVariable long id, Model model) {
         model.addAttribute("customer", customerService.findById(id));
         return "customer/update";
     }
-    @PostMapping("/customer/update")
+    @PostMapping("/customers/update")
     public String update(Customer customer, RedirectAttributes redirect) {
-        customerService.update(customer.getId(), customer);
+        customerService.save(customer);
         redirect.addFlashAttribute("success", "updated customer successfully!");
         return "redirect:/customer";
     }
-    @GetMapping("/customer/{id}/delete")
-    public String delete(@PathVariable int id, Model model) {
+    @GetMapping("/customers/{id}/delete")
+    public String delete(@PathVariable long id, Model model) {
         model.addAttribute("customer", customerService.findById(id));
         return "customer/delete";
     }
-    @PostMapping("/customer/delete")
+    @PostMapping("/customers/delete")
     public String delete(Customer customer, RedirectAttributes redirect) {
-        customerService.remove(customer.getId());
+        customerService.delete(customer);
         redirect.addFlashAttribute("success", "Removed customer successfully!");
         return "redirect:/customer";
     }

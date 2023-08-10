@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Customers List</title>
+    <th:block th:replace="layout/head" />
+</head>
+
+<body>
+
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- Topbar Start -->
+    <th:block th:replace="layout/navbar"/>
+    <!-- end Topbar -->
+
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left-side-menu">
+
+        <div class="slimscroll-menu">
+
+            <!--- Sidemenu -->
+            <th:block th:replace="layout/sidebar"/>
+            <!-- End Sidebar -->
+
+            <div class="clearfix"></div>
+
+        </div>
+        <!-- Sidebar -left -->
+
+    </div>
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">NhatAD</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
+                                    <li class="breadcrumb-item active">Categories List</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Categories List</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+                <div class="col-lg-12">
+                    <div class="card-box">
+                        <div style="color: red">
+                            <div th:if="${success}">
+                                <span th:text="${success}"></span>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped mb-0">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Title</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="row,rowStat : ${categories}">
+                                    <td th:text="${row.getId()}"></td>
+                                    <td th:text="${row.getTitle()}"></td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div> <!-- end table-responsive-->
+
+                    </div> <!-- end card-box -->
+                </div>
+            </div> <!-- container -->
+
+        </div> <!-- content -->
+
+        <!-- Footer Start -->
+        <th:block th:replace="layout/footer"/>
+        <!-- end Footer -->
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+
+</div>
+<!-- END wrapper -->
+
+
+<!-- Right Sidebar -->
+<th:block th:replace="layout/rightbar"/>
+<!-- /Right-bar -->
+
+<!-- Right bar overlay-->
+<div class="rightbar-overlay"></div>
+
+<th:block th:replace="layout/script"/>
+
+</body>
+</html>
