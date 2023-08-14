@@ -1,0 +1,49 @@
+.table-title {
+    background: #299be4;
+    color: #fff;
+    padding: 16px 30px;
+    border-radius: 3px 3px 0 0;
+}
+
+.table-title .btn {
+    float: right;
+    min-width: 50px;
+    outline: none !important;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.table thead tr {
+    background-color: #4CAF50 !important;
+    color: #fff;
+    border: 0;
+    text-align: center;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.pa-bottom {
+    padding-bottom: 0!important;
+    margin-bottom: 0!important;
+}
+span.error {
+    color: red;
+}
+
+footer {
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    height: auto;
+    margin-bottom: 0 !important;
+    width: 100%;
+}
+.align-td{
+    text-align: center;
+}
